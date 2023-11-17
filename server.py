@@ -38,10 +38,17 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    # model = AutoModelForCausalLM.from_pretrained(
+    #     args.model,
+    #     device_map="auto",
+    #     trust_remote_code=True
+    # )
+    device = f'cuda:{torch.cuda.current_device()}' # if torch.cuda.is_available() else 'cpu'
+
     model = AutoModelForCausalLM.from_pretrained(
         args.model,
-        device_map="auto",
-        trust_remote_code=True
+        trust_remote_code=True,
+        init_device=device
     )
     tokenizer = AutoTokenizer.from_pretrained(args.model,trust_remote_code=True)
 
